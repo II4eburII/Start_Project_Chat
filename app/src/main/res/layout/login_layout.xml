@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    tools:context=".ui.main.MainActivity">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="email"
+        android:id="@+id/emailaddress"
+        android:layout_marginLeft="170dp"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:id="@+id/password"
+        android:layout_marginLeft="170dp"
+        android:layout_marginTop="50dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="send"
+        android:id="@+id/btnLogin"
+        android:layout_marginLeft="170dp"
+        android:layout_marginTop="120dp"
+        android:onClick="onClick"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="To register"
+        android:id="@+id/btnToRegister"
+        android:layout_marginLeft="170dp"
+        android:layout_marginTop="180dp"
+        android:onClick="onClick"/>
+
+
+
+</RelativeLayout>

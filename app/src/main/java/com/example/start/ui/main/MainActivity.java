@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        // [END delete_user]
+        // [END delete_users]
     }
 
     }

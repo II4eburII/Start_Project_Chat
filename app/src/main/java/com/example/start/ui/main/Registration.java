@@ -15,6 +15,7 @@ import com.example.start.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -59,7 +60,21 @@ public class Registration extends AppCompatActivity  {
                                             Toast.makeText(getApplicationContext(), "Already registered", Toast.LENGTH_SHORT).show();
                                         } else {
                                             addNewUser();
-                                            Toast.makeText(getApplicationContext(), "Successfull registered", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "Successfully registered", Toast.LENGTH_SHORT).show();
+                                            FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailAdress.getText().toString(), firstPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()){
+                                                        Toast.makeText(getApplicationContext(), "Successfully registered in Firebase", Toast.LENGTH_SHORT).show();
+
+                                                        Intent login = new Intent(Registration.this, MainActivity.class);
+                                                        startActivity(login);
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(getApplicationContext(), "Failure registered in Firebase", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                         }
                                     }
                                 });

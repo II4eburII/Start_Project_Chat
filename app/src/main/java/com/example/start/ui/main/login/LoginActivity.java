@@ -1,4 +1,4 @@
-package com.example.start.ui.main;
+package com.example.start.ui.main.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.start.MyApp;
 import com.example.start.R;
+import com.example.start.ui.main.main.MainActivity;
+import com.example.start.ui.main.main.MainActivityViewModel;
+import com.example.start.ui.main.Registration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,9 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
+import java.util.Arrays;
 
-public class Login extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity  {
     EditText emailAdress;
     EditText Password;
     Button send;
@@ -57,13 +62,14 @@ public class Login extends AppCompatActivity  {
         toRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent register = new Intent(Login.this, Registration.class);
+                Intent register = new Intent(LoginActivity.this, Registration.class);
                 startActivity(register);
                 finish();
             }
         });
     }
     private void SignIn(){
+        LoginViewModel viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         FirebaseFirestore.getInstance().collection("client").document(emailAdress.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -71,8 +77,12 @@ public class Login extends AppCompatActivity  {
 
                     if (task.getResult().getData().values().toArray()[6].toString().equals(Password.getText().toString())) {
                         Log.d("MyApp", "Successfully login");
+                        MyApp app = ((MyApp) getApplicationContext());
+                        app.setUser(task.getResult().getData());
+                        Log.d("MyApp", app.getUser() + " ");
+                        //viewModel.getUser().setUser(Arrays.toString(task.getResult().getData().values().toArray()));
                         Toast.makeText(getApplicationContext(), "Successfull login", Toast.LENGTH_SHORT).show();
-                        Intent main = new Intent(Login.this, MainActivity.class);
+                        Intent main = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(main);
                         finish();
                     } else {

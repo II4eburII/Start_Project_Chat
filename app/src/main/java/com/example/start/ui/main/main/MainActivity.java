@@ -1,51 +1,30 @@
-package com.example.start.ui.main;
+package com.example.start.ui.main.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.example.start.MyApp;
 import com.example.start.data.Message;
 import com.example.start.R;
-import com.example.start.data.Post;
 import com.example.start.databinding.ActivityMainBinding;
-import com.example.start.email.EmailPasswordActivity;
-import com.example.start.network.Network;
+import com.example.start.ui.main.Registration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Comment;
-
-import java.text.DateFormat;
 import java.util.TimeZone;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -82,27 +61,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-            //foreground
         }
     public void checkCurrentUser() {
-        // [START check_current_user]
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // User is signed in
-
+        MyApp app = ((MyApp) getApplicationContext());
+        Log.d("MyApp", app.getUser() + " ");
+        if (app.getUser() != null) { /*app.getIsLoginned()*/
         } else {
-            // No user is signed in
             Intent register = new Intent(MainActivity.this, Registration.class);
             startActivity(register);
             finish();
         }
-        // [END check_current_user]
     }
 
     public void sendEmailVerification() {
-        // [START send_email_verification]
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
@@ -115,11 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        // [END send_email_verification]
     }
 
     public void deleteUser() {
-        // [START delete_user]
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         user.delete()
@@ -131,7 +100,5 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        // [END delete_userss]
     }
-
-    }
+}

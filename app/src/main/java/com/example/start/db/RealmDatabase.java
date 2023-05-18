@@ -2,6 +2,11 @@ package com.example.start.db;
 import androidx.annotation.NonNull;
 
 import com.example.start.data.Message;
+import com.example.start.data.User;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.Collection;
+import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -53,5 +58,15 @@ public class RealmDatabase {
             return 0;
         return number.longValue() + 1;
     }
-
+    public void setUser(User user){
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(@NonNull Realm realm) {
+                realm.insertOrUpdate((Collection<? extends RealmModel>) user);
+            }
+        });
+    }
+    public User getUser(){
+        return mRealm.where(User.class).findFirst();
+    }
 }

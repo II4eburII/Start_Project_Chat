@@ -1,4 +1,4 @@
-package com.example.start.ui.main;
+package com.example.start.ui.main.main;
 
 import com.example.start.data.Message;
 

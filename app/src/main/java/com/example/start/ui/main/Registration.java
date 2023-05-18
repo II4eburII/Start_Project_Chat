@@ -12,9 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.start.R;
+import com.example.start.ui.main.login.LoginActivity;
+import com.example.start.ui.main.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -84,7 +85,7 @@ public class Registration extends AppCompatActivity  {
         toLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent login = new Intent(Registration.this, Login.class);
+                Intent login = new Intent(Registration.this, LoginActivity.class);
                 startActivity(login);
                 finish();
 
@@ -92,14 +93,14 @@ public class Registration extends AppCompatActivity  {
         });
     }
     private void addNewUser(){
-        Map<String, Object> reg_entry = new HashMap<>();
+        Map<String, String> reg_entry = new HashMap<>();
         reg_entry.put("Email", emailAdress.getText().toString());
         reg_entry.put("Password", firstPassword.getText().toString());
         reg_entry.put("Name", name.getText().toString());
-        reg_entry.put("TimeRegistration", System.currentTimeMillis());
+        reg_entry.put("TimeRegistration", String.valueOf(System.currentTimeMillis()));
         reg_entry.put("Id", UUID.randomUUID().toString());
         reg_entry.put("MobNumber", "Soon");
-        reg_entry.put("Is2FaOn", false);
+        reg_entry.put("Is2FaOn", "false");
         FirebaseFirestore.getInstance().collection("client").document(emailAdress.getText().toString()).set(reg_entry);
     }
     private Runnable doBackgroundThreadProcessing = new Runnable() {

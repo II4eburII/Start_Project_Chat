@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
+        android:name=".MyApp"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
@@ -15,7 +16,7 @@
         android:theme="@style/Theme.Start"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +29,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".ui.main.Login"
+            android:name=".ui.main.login.LoginActivity"
             android:exported="true">
         </activity>
     </application>

@@ -14,18 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.start.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.Source;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class Login extends AppCompatActivity  {
     EditText emailAdress;
@@ -75,25 +69,12 @@ public class Login extends AppCompatActivity  {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
 
-                    if (task.getResult().getData().values().toArray()[6].toString().equals(Password.getText().toString())){
+                    if (task.getResult().getData().values().toArray()[6].toString().equals(Password.getText().toString())) {
                         Log.d("MyApp", "Successfully login");
                         Toast.makeText(getApplicationContext(), "Successfull login", Toast.LENGTH_SHORT).show();
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(emailAdress.getText().toString(), Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful())
-                                {
-                                    Log.d("MyApp", "Successfully login in Firebase");
-                                    Toast.makeText(getApplicationContext(), "Successfully login in Firebase", Toast.LENGTH_SHORT).show();
-                                    Intent login = new Intent(Login.this, MainActivity.class);
-                                    startActivity(login);
-                                    finish();
-                                } else {
-                                    Log.d("MyApp", "Failure login in Firebase");
-                                    Toast.makeText(getApplicationContext(), "Failure login in Firebase", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                        Intent main = new Intent(Login.this, MainActivity.class);
+                        startActivity(main);
+                        finish();
                     } else {
                         Log.d("MyApp", "Failure login");
                         Toast.makeText(getApplicationContext(), "Failure login", Toast.LENGTH_SHORT).show();

@@ -14,9 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.start.MyApp;
 import com.example.start.R;
+import com.example.start.data.User;
 import com.example.start.ui.main.main.MainActivity;
-import com.example.start.ui.main.main.MainActivityViewModel;
-import com.example.start.ui.main.Registration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class LoginActivity extends AppCompatActivity  {
     EditText emailAdress;
@@ -62,7 +61,7 @@ public class LoginActivity extends AppCompatActivity  {
         toRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent register = new Intent(LoginActivity.this, Registration.class);
+                Intent register = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(register);
                 finish();
             }
@@ -78,7 +77,7 @@ public class LoginActivity extends AppCompatActivity  {
                     if (task.getResult().getData().values().toArray()[6].toString().equals(Password.getText().toString())) {
                         Log.d("MyApp", "Successfully login");
                         MyApp app = ((MyApp) getApplicationContext());
-                        app.setUser(task.getResult().getData());
+                        app.setUser(new User(task.getResult().getData().values().stream().map(Object::toString).collect(Collectors.joining(","))));
                         Log.d("MyApp", app.getUser() + " ");
                         //viewModel.getUser().setUser(Arrays.toString(task.getResult().getData().values().toArray()));
                         Toast.makeText(getApplicationContext(), "Successfull login", Toast.LENGTH_SHORT).show();

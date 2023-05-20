@@ -1,4 +1,4 @@
-package com.example.start.ui.main;
+package com.example.start.ui.main.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.start.R;
-import com.example.start.ui.main.login.LoginActivity;
 import com.example.start.ui.main.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Registration extends AppCompatActivity  {
+public class RegistrationActivity extends AppCompatActivity  {
     EditText emailAdress;
     EditText firstPassword;
     EditText secondPassword;
@@ -68,7 +67,7 @@ public class Registration extends AppCompatActivity  {
                                                     if (task.isSuccessful()){
                                                         Toast.makeText(getApplicationContext(), "Successfully registered in Firebase", Toast.LENGTH_SHORT).show();
 
-                                                        Intent login = new Intent(Registration.this, MainActivity.class);
+                                                        Intent login = new Intent(RegistrationActivity.this, MainActivity.class);
                                                         startActivity(login);
                                                         finish();
                                                     } else {
@@ -85,7 +84,7 @@ public class Registration extends AppCompatActivity  {
         toLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent login = new Intent(Registration.this, LoginActivity.class);
+                Intent login = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(login);
                 finish();
 

@@ -77,7 +77,4 @@ public class MainActivityViewModel extends AndroidViewModel {
     public Message getContextClickOperation(){
         return mAdapter.getContextClickOperation();
     }
-    public User getUser(){
-        return mDatabase.getUser();
-    }
 }

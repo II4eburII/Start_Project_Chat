@@ -17,7 +17,7 @@ import com.example.start.MyApp;
 import com.example.start.data.Message;
 import com.example.start.R;
 import com.example.start.databinding.ActivityMainBinding;
-import com.example.start.ui.main.Registration;
+import com.example.start.ui.main.login.RegistrationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
         binding.btnSend.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NotifyDataSetChanged")
             public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.btnSend:
                         if (!binding.message.getText().toString().trim().isEmpty()) {
                             viewModel.addMessage(
                                     new Message("Марк",
@@ -55,19 +53,23 @@ public class MainActivity extends AppCompatActivity {
                                             !binding.authorname.getText().toString().isEmpty(), binding.authorname.getText().toString().isEmpty() ? "0" : "1", binding.authorname.getText().toString().isEmpty() ? "1" : "0"));
                             binding.message.getText().clear();
                         }
-                    case R.id.btnBackToMenu:
-                        FirebaseAuth.getInstance().signOut();
-                }
             }
         });
-
+        binding.btnBackToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyApp app = ((MyApp) getApplicationContext());
+                app.signOut();
+            }
+        });
         }
     public void checkCurrentUser() {
         MyApp app = ((MyApp) getApplicationContext());
         Log.d("MyApp", app.getUser() + " ");
-        if (app.getUser() != null) { /*app.getIsLoginned()*/
+        if (app.checkUser() != "null") { /*app.getIsLoginned()*/
+            Log.d("MyApp", app.getUser() + "login");
         } else {
-            Intent register = new Intent(MainActivity.this, Registration.class);
+            Intent register = new Intent(MainActivity.this, RegistrationActivity.class);
             startActivity(register);
             finish();
         }

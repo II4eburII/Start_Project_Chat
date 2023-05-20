@@ -1,4 +1,6 @@
 package com.example.start.db;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.start.data.Message;
@@ -11,6 +13,7 @@ import java.util.Map;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmModel;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class RealmDatabase {
@@ -58,15 +61,33 @@ public class RealmDatabase {
             return 0;
         return number.longValue() + 1;
     }
-    public void setUser(User user){
+    public void setUserDB(User user){
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
-                realm.insertOrUpdate((Collection<? extends RealmModel>) user);
+                realm.copyToRealmOrUpdate((User) user);
             }
         });
     }
-    public User getUser(){
+    public User getUserDB(){
         return mRealm.where(User.class).findFirst();
+    }
+    public void signOut(){
+        getUserDB().signOut();
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(@NonNull Realm realm) {
+                realm.copyToRealmOrUpdate((User) new User());
+            }
+        });
+    }
+    public String checkUser(){
+        if (mRealm.where(User.class).findFirst() == null){
+            return "null";
+        }
+        if (mRealm.where(User.class).findFirst().getIsLoginned()){
+            return "loginned";
+        }
+        return "notloginned";
     }
 }

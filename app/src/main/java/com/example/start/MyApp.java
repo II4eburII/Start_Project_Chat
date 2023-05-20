@@ -2,6 +2,7 @@ package com.example.start;
 
 import android.app.Application;
 
+import com.example.start.data.User;
 import com.example.start.db.RealmDatabase;
 
 import java.util.Map;
@@ -10,13 +11,10 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class MyApp extends Application {
-    private Map<String, Object> User;
-    private boolean isLoginned;
     private RealmDatabase mDatabase;
     @Override
     public void onCreate() {
         super.onCreate();
-        isLoginned = (User == null? false: true);
 
         Realm.init(this);
 
@@ -29,22 +27,18 @@ public class MyApp extends Application {
                         build());
     }
 
-    public Map<String, Object> getUser() {
-        return User;
+    public User getUser() {
+        return mDatabase.getUserDB();
     }
 
-    public void setUser(Map<String, Object> User) {
-        this.User = User;
-        this.isLoginned = true;
+    public void setUser(com.example.start.data.User user) {
+        mDatabase.setUserDB(user);
     }
-    public boolean getIsLoginned(){
-        return isLoginned;
-    }
-    public void SignOut(){
-        this.User = null;
-        this.isLoginned = false;
+    public void signOut(){
+        mDatabase.signOut();
     }
     public RealmDatabase getDatabase(){
         return mDatabase;
     }
+    public String checkUser(){return mDatabase.checkUser();}
 }

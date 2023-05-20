@@ -60,15 +60,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 MyApp app = ((MyApp) getApplicationContext());
                 app.signOut();
+                checkCurrentUser();
             }
         });
         }
     public void checkCurrentUser() {
         MyApp app = ((MyApp) getApplicationContext());
-        Log.d("MyApp", app.getUser() + " ");
-        if (app.checkUser() != "null") { /*app.getIsLoginned()*/
-            Log.d("MyApp", app.getUser() + "login");
-        } else {
+        if (app.checkUser() == "null") {
             Intent register = new Intent(MainActivity.this, RegistrationActivity.class);
             startActivity(register);
             finish();

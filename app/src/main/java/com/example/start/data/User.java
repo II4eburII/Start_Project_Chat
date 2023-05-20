@@ -14,7 +14,7 @@ public class User extends RealmObject {
     private boolean isLoginned;
     public User(String user){
         this.user = user;
-        this.isLoginned = true;
+        isLoginned = true;
     }
     public User(){
     }
@@ -23,13 +23,13 @@ public class User extends RealmObject {
     }
     public void setUser(String user){
         this.user = user;
-        this.isLoginned = true;
+        isLoginned = true;
     }
     public void signOut(){
-        this.user = "null";
-        this.isLoginned = false;
+        user = "null";
+        isLoginned = false;
     }
     public boolean getIsLoginned(){
-        return !user.isEmpty();
+        return isLoginned;
     }
 }

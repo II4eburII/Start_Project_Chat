@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 
 import com.example.start.data.Message;
 import com.example.start.data.User;
+import com.example.start.ui.main.main.MainActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Collection;
@@ -73,7 +74,7 @@ public class RealmDatabase {
         return mRealm.where(User.class).findFirst();
     }
     public void signOut(){
-        getUserDB().signOut();
+        setUserDB(new User());
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
@@ -82,12 +83,9 @@ public class RealmDatabase {
         });
     }
     public String checkUser(){
-        if (mRealm.where(User.class).findFirst() == null){
+        if (mRealm.where(User.class).findFirst().getUser() == null || mRealm.where(User.class).findFirst().getUser() == "null"){
             return "null";
         }
-        if (mRealm.where(User.class).findFirst().getIsLoginned()){
-            return "loginned";
-        }
-        return "notloginned";
+        return "loginned";
     }
 }
